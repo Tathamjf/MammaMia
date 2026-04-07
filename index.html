@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora Mamma Mia!</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+<div class="calc">
+  <h2>Base 21 🇮🇹</h2>
+
+  <select id="modo" onchange="trocarModo()">
+    <option value="italiano">Modo Italiano (Base 21)</option>
+    <option value="numero">Modo Numérico (Base 10)</option>
+  </select>
+
+  <div class="display" id="display">0</div>
+
+  <div class="result">
+    <div>Decimal: <span id="dec">0</span></div>
+    <div>Italiano: <span id="ita">A</span></div>
+  </div>
+
+  <div class="grid" id="teclado"></div>
+</div>
+
+
+</body>
+</html>
