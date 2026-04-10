@@ -1,26 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Calculadora Mamma Mia!</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculadora Mamma Mia!</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="calc">
+      <h2>Base 21 🇮🇹</h2>
 
-<div class="calc">
-  <h2>🧮 Mamma Mia - Base 21</h2>
+      <select id="modo" onchange="trocarModo()">
+        <option value="italiano">Modo Italiano (Base 21)</option>
+        <option value="numero">Modo Numérico (Base 10)</option>
+      </select>
 
-  <div class="display" id="display">0</div>
+      <div class="display" id="display">0</div>
 
-  <div class="result">
-    <div>Decimal: <span id="dec">0</span></div>
-    <div>Binário: <span id="bin">00000</span></div>
-    <div>Mamma Mia: <span id="ita">A</span></div>
-  </div>
+      <div class="result">
+        <div>Decimal: <span id="dec">0</span></div>
+        <div>Binário: <span id="bin">00000</span></div>
+        <div>Hexadecimal: <span id="hex">0</span></div>
+        <div>Octal: <span id="oct">0</span></div>
+        <div>Mamma Mia: <span id="ita">A</span></div>
+      </div>
 
-  <div class="grid" id="teclado"></div>
-</div>
-
-</body>
+      <div class="grid" id="teclado"></div>
+    </div>
+  </body>
 </html>

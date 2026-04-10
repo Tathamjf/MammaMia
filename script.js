@@ -1,16 +1,19 @@
 const chars = "ABCDEFGHILMNOPQRSTUVZ";
 let valor = "";
+let modo = "italiano";
 
-// gerar teclado completo
+function trocarModo() {
+  modo = document.getElementById("modo").value;
+  valor = "";
+  atualizar();
+  gerarTeclado();
+}
+
 function gerarTeclado() {
   const teclado = document.getElementById("teclado");
   teclado.innerHTML = "";
 
-  const botoes = [
-    "1","2","3","4","5",
-    "6","7","8","9","0",
-    ...chars.split("")
-  ];
+  const botoes = chars.split(""); // só letras italianas
 
   botoes.forEach(b => {
     let btn = document.createElement("button");
@@ -19,39 +22,12 @@ function gerarTeclado() {
     teclado.appendChild(btn);
   });
 
-  // deletar
   let del = document.createElement("button");
-  del.innerText = "⌫";
-  del.onclick = deletar;
-  teclado.appendChild(del);
-
-  // limpar
-  let clear = document.createElement("button");
-  clear.innerText = "C";
-  clear.className = "clear";
-  clear.onclick = limpar;
-  teclado.appendChild(clear);
+    del.innerText = "⌫";
+del.onclick = deletar;
+teclado.appendChild(del);
 }
 
-// adicionar valor
-function add(v) {
-  valor += v;
-  atualizar();
-}
-
-// deletar último
-function deletar() {
-  valor = valor.slice(0, -1);
-  atualizar();
-}
-
-// limpar tudo
-function limpar() {
-  valor = "";
-  atualizar();
-}
-
-// italiano → decimal
 function italianoParaDecimal(valor) {
   let resultado = 0;
 
@@ -65,7 +41,6 @@ function italianoParaDecimal(valor) {
   return resultado;
 }
 
-// decimal → italiano
 function decimalParaItaliano(num) {
   if (num === 0) return "A";
 
@@ -80,54 +55,72 @@ function decimalParaItaliano(num) {
   return resultado;
 }
 
-// italiano → binário (5 bits por letra)
 function italianoParaBinario(valor) {
   let resultado = [];
 
   for (let i = 0; i < valor.length; i++) {
     let index = chars.indexOf(valor[i].toUpperCase());
-    if (index === -1) continue;
+    if (index === -1) return "Erro";
 
-    resultado.push(index.toString(2).padStart(5, "0"));
+    let bin = index.toString(2).padStart(5, "0");
+    resultado.push(bin);
   }
 
   return resultado.join(" ");
 }
 
-// atualizar tela
+function italianoParaHex(valor) {
+  let decimal = italianoParaDecimal(valor);
+  if (isNaN(decimal)) return "-";
+  return decimal.toString(16).toUpperCase();
+}
+
+function italianoParaOctal(valor) {
+  let decimal = italianoParaDecimal(valor);
+  if (isNaN(decimal)) return "-";
+  return decimal.toString(8);
+}
+
 function atualizar() {
   document.getElementById("display").innerText = valor || "0";
 
   if (valor === "") {
-    setAll("0", "00000", "A");
+    setAll("0", "A", "00000", "0", "0");
     return;
   }
 
-  let decimal;
-
-  // se for número puro
-  if (/^[0-9]+$/.test(valor)) {
-    decimal = parseInt(valor);
-  } else {
-    decimal = italianoParaDecimal(valor);
-  }
+  let decimal = italianoParaDecimal(valor);
 
   if (isNaN(decimal)) {
-    setAll("-", "-", "-");
+    setAll("-", "-", "-", "-", "-");
     return;
   }
 
   document.getElementById("dec").innerText = decimal;
-  document.getElementById("ita").innerText = decimalParaItaliano(decimal);
+  document.getElementById("ita").innerText = valor.toUpperCase();
   document.getElementById("bin").innerText = italianoParaBinario(valor);
+  document.getElementById("hex").innerText = italianoParaHex(valor);
+  document.getElementById("oct").innerText = italianoParaOctal(valor);
 }
 
-// set valores
-function setAll(dec, bin, ita) {
+function add(v) {
+  valor += v;
+  atualizar();
+}
+
+function deletar() {
+  valor = valor.slice(0, -1);
+  atualizar();
+}
+
+function setAll(dec, ita, bin, hex, oct) {
   document.getElementById("dec").innerText = dec;
-  document.getElementById("bin").innerText = bin;
   document.getElementById("ita").innerText = ita;
+  document.getElementById("bin").innerText = bin;
+  document.getElementById("hex").innerText = hex;
+  document.getElementById("oct").innerText = oct;
 }
 
-// iniciar
+// inicial
+trocarModo();
 gerarTeclado();
